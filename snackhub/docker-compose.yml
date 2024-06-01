@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  snackhubweb:
+    image: snackhub
+    build:
+      context: .
+      dockerfile: ./src/Dockerfile
+    ports:
+      - "42044:80"
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge

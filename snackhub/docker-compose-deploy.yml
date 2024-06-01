@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  kalleimob:
+    image: ${IMAGE}
+    restart: always
+    container_name: snackhub.web
+    ports:
+      - "42044:80"
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
