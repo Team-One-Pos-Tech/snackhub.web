@@ -20,7 +20,7 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy the built Angular app from the builder stage to the nginx web server directory
-COPY tools/nginx/default.conf /etc/nginx/conf.d
+COPY default.conf /etc/nginx/conf.d
 COPY --from=builder /app/dist/snackhub /usr/share/nginx/html
 
 # Expose port 80 to the outside world
