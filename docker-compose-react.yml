@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  snackhubweb:
+    image: snackhub.web
+    container_name: snackhub.web
+    restart: always
+    build:
+      context: .
+      dockerfile: .snackhub_react/src/Dockerfile
+    ports:
+      - "42046:80"
+    networks:
+      - backend
+networks:
+  backend:
+    driver: bridge
