@@ -7,7 +7,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: .snackhub_react/src/Dockerfile
+      dockerfile: ./snackhub_react/src/Dockerfile
     ports:
       - "42046:80"
     networks:
