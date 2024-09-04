@@ -5,13 +5,13 @@ FROM node:20 as builder
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the working directory
-COPY snackhub_react/package*.json ./
+COPY package*.json ./
 
 # Install project dependencies
 RUN npm install
 
 # Copy the rest of the application code
-COPY snackhub/ .
+COPY . .
 
 # Build the Angular application
 RUN npm run build --prod
@@ -20,8 +20,8 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy the built Angular app from the builder stage to the nginx web server directory
-COPY snackhub_react/tools/nginx/default.conf /etc/nginx/conf.d
-COPY --from=builder /app/dist/snackhub /usr/share/nginx/html
+COPY tools/nginx/default.conf /etc/nginx/conf.d
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port 80 to the outside world
 EXPOSE 80

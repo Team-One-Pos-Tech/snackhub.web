@@ -4,6 +4,7 @@ services:
   snackhubweb:
     image: snackhub.web
     container_name: snackhub.web
+    restart: always
     build:
       context: .
       dockerfile: ./src/Dockerfile
