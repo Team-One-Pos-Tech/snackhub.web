@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { KeycloakEventType, KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   public isLoggedIn = false;
@@ -13,12 +14,21 @@ export class AppComponent implements OnInit {
 
   constructor(private readonly keycloak: KeycloakService) {}
 
-  public async ngOnInit() {
-    this.isLoggedIn = await this.keycloak.isLoggedIn();
+  public ngOnInit(): void {
+    var instance = this.keycloak.getKeycloakInstance();
 
-    if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
-    }
+    from(this.keycloak.keycloakEvents$).subscribe((event: any) => {
+      if (event.type == KeycloakEventType.OnTokenExpired) {
+        this.keycloak.isLoggedIn().then((result) => {
+          if (!result) {
+          } else {
+            this.keycloak.updateToken(20);
+          }
+        });
+      }
+      if (event.type == KeycloakEventType.OnAuthRefreshSuccess) {
+      }
+    });
   }
 
   public login() {

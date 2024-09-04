@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: ./src/Dockerfile
     ports:
-      - "42044:80"
+      - "42045:80"
     networks:
       - backend
 networks:

@@ -1,7 +1,7 @@
 export const environment = {
   keycloak: {
-    url: 'https://kalleinfra-keycloak.asmpjl.easypanel.host',
+    url: 'https://keycloak.forinnovation.com.br',
     realm: 'snackhub',
-    clientId: 'snackhub-cli'
+    clientId: 'snakhubapi'
   }
 };
