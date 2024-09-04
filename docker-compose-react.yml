@@ -1,17 +1,50 @@
-version: '3.4'
-
 services:
   snackhubweb:
     image: snackhub.web
-    container_name: snackhub.web
+    container_name: snackhubweb-n080kwss8sckggco08o0w0sg-035119398948
     restart: always
     build:
       context: .
       dockerfile: ./snackhub_react/src/Dockerfile
     ports:
-      - "42046:80"
+      - '42046:80'
     networks:
-      - backend
+      backend: null
+      n080kwss8sckggco08o0w0sg: null
+    labels:
+      - coolify.managed=true
+      - coolify.version=4.0.0-beta.325
+      - coolify.applicationId=21
+      - coolify.type=application
+      - coolify.name=snackhubweb-n080kwss8sckggco08o0w0sg-035119398948
+      - coolify.pullRequestId=0
+      - traefik.enable=true
+      - traefik.http.middlewares.gzip.compress=true
+      - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+      - traefik.http.routers.http-0-n080kwss8sckggco08o0w0sg-snackhubweb.entryPoints=http
+      - traefik.http.routers.http-0-n080kwss8sckggco08o0w0sg-snackhubweb.middlewares=redirect-to-https
+      - 'traefik.http.routers.http-0-n080kwss8sckggco08o0w0sg-snackhubweb.rule=Host(`snackhub.kallesoft.com.br`) && PathPrefix(`/`)'
+      - traefik.http.routers.https-0-n080kwss8sckggco08o0w0sg-snackhubweb.entryPoints=https
+      - traefik.http.routers.https-0-n080kwss8sckggco08o0w0sg-snackhubweb.middlewares=gzip
+      - 'traefik.http.routers.https-0-n080kwss8sckggco08o0w0sg-snackhubweb.rule=Host(`snackhub.kallesoft.com.br`) && PathPrefix(`/`)'
+      - traefik.http.routers.https-0-n080kwss8sckggco08o0w0sg-snackhubweb.tls.certresolver=letsencrypt
+      - traefik.http.routers.https-0-n080kwss8sckggco08o0w0sg-snackhubweb.tls=true
+    environment:
+      COOLIFY_BRANCH: main
+      COOLIFY_CONTAINER_NAME: snackhubweb-n080kwss8sckggco08o0w0sg-035119398948
+      COOLIFY_URL: 'https://snackhub.kallesoft.com.br'
+      COOLIFY_FQDN: snackhub.kallesoft.com.br
+      COOLIFY_APP_NAME: snackhub.web
+      COOLIFY_SERVER_IP: 192.168.1.101
+      COOLIFY_ENVIRONMENT_NAME: production
+      COOLIFY_PROJECT_NAME: 'Projeto pós'
+      NODE_ENV: production
+volumes: {  }
 networks:
   backend:
     driver: bridge
+  n080kwss8sckggco08o0w0sg:
+    name: n080kwss8sckggco08o0w0sg
+    external: true
+configs: {  }
+secrets: {  }
